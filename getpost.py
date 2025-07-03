@@ -18,6 +18,11 @@ def index():
 def about():
     return render_template("about.html")
 
+'''
+Khi người dùng truy cập /form -> Mặc định GET sẽ redirect đến form.html.
+Khi user nhập tên và submit form, form dùng method="post" nên sẽ gửi yêu cầu bằng POST
+-> server lấy dữ liệu từ request.form['name'] và phản hồi bằng Hello {name}!.
+'''
 @app.route("/form",methods=["GET", "POST"])
 def form():
     if request.method == "POST":
