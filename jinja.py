@@ -1,6 +1,11 @@
 ### Building Url Dynamically 
 ### Variable Rule 
 ### Jinja2 Template Engine
+'''
+{{ }} expressions to print output in HTML 
+{%...%} conditions, for loops 
+{#...#} this is for comments
+'''
 
 from flask import Flask, render_template, request
 '''
@@ -19,7 +24,29 @@ def form():
 
 @app.route("/success/<int:score>")
 def success(score):
-    return "Your score is " + str(score)
+    res = ""
+    if score >= 50:
+        res = "PASSED"
+    else:
+        res = "FAILED"
+    return render_template("result.html", result=res)
+
+@app.route("/successres/<int:score>")
+def successres(score):
+    res = ""
+    if score >= 50:
+        res = "PASSED"
+    else:
+        res = "FAILED"
+
+    exp = {'score': score, 'res':res}
+    return render_template("result1.html", result=exp)
+
+## if condition
+@app.route("/successif/<int:score>")
+def successif(score):
+
+    return render_template("result2.html", result=score)
 
 if __name__ == "__main__":
     app.run(debug=True)
