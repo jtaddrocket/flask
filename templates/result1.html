@@ -3,14 +3,14 @@
         Final Results
     </h2>
     <body>
-        <table border=2>
+
             {% for key, value in result.items() %}
-            <tr>
+
                 {# This is the comment section #}
-                <th>{{ key }}</th>
-                <tr>{{ value }}</tr>
-            </tr>
+                <h1>{{ key }}</h1>
+                <h2>{{ value }}</h2>
+
             {% endfor %}
-        </table>
+
     </body>
 </html>
