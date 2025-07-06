@@ -18,7 +18,7 @@ def home():
 
 ## Get: Retrieve all the items
 
-@app.route('/items', method = ['GET'])
+@app.route('/items', methods=['GET'])
 def get_items():
     return jsonify(items)
 
@@ -31,7 +31,7 @@ def get_item(item_id):
     return jsonify(item)
 
 ## Post: Create a new task 
-@app.route('items'.methods['POST'])
+@app.route('/items', methods=['POST'])
 def create_item():
     if not request.json or not 'name' in request.json:
         return jsonify({"error": "Item not found"})
@@ -43,7 +43,25 @@ def create_item():
     items.append(new_item)
     return jsonify(new_item)
 
+## Put: Update an existing item
+'''
+POST dùng để tạo mới tài nguyên, PUT dùng để cập nhật hoặc thay thế tài nguyên có sẵn.
+'''
+@app.route('/items/<int:item_id>', methods=['PUT'])
+def update_item(item_id):
+    item = next((item for item in items if item['id'] == item_id), None)
+    if item is None:
+        return jsonify({"error": "Item not found"})
+    item['name'] = request.json.get('name', item['name'])
+    item['description'] = request.json.get('description', item['description'])
+    return jsonify(item)
 
+## Delete: Delete an item 
+@app.route('/items/<int:item_id>', methods=['DELETE'])
+def delete_item(item_id): 
+    global items 
+    items = [item for item in items if item['id'] != item_id]
+    return jsonify({"result": "Item deleted"})
 
 if __name__ == '__main__':
     app.run(debug=True)
